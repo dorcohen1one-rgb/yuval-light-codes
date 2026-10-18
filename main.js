@@ -1,0 +1,246 @@
+/* Yuval's Light Codes */
+
+// Fill these in to activate direct contact. WhatsApp: international format, digits only (e.g. "972501234567").
+const CONTACT = {
+  whatsapp: "972505822182",
+  email: "",
+  instagram: "",
+  tiktok: "",
+};
+
+const SERVICE_LABELS = {
+  channeling: "תקשור אישי",
+  custom: "ציור Light Code בהתאמה אישית",
+  ready: "ציור מהגלריה",
+  general: "עוד לא בטוחה, רוצה לשמוע עוד",
+};
+
+document.documentElement.classList.add("js");
+
+/* Header shadow + floating CTA */
+const header = document.querySelector(".site-header");
+const floatCta = document.getElementById("float-cta");
+const hero = document.querySelector(".hero");
+const contactSection = document.getElementById("contact");
+let contactVisible = false;
+
+function onScroll() {
+  const y = window.scrollY;
+  if (!spy) {
+    const r = contactSection.getBoundingClientRect();
+    contactVisible = r.top < innerHeight && r.bottom > 0;
+  }
+  header.classList.toggle("scrolled", y > 20);
+  floatCta.classList.toggle("show", y > hero.offsetHeight * 0.8 && !contactVisible);
+}
+window.addEventListener("scroll", onScroll, { passive: true });
+
+/* Mobile nav */
+const nav = document.getElementById("main-nav");
+const toggle = document.querySelector(".nav-toggle");
+
+function setNav(open) {
+  nav.classList.toggle("open", open);
+  toggle.setAttribute("aria-expanded", String(open));
+  toggle.setAttribute("aria-label", open ? "סגירת תפריט" : "פתיחת תפריט");
+  document.body.classList.toggle("nav-open", open);
+  if (open) nav.querySelector("a")?.focus();
+}
+
+// Keep Tab inside the full-screen menu while it is open
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Tab" || !nav.classList.contains("open")) return;
+  const items = [...nav.querySelectorAll("a"), toggle];
+  const i = items.indexOf(document.activeElement);
+  const next = e.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i === -1 || i === items.length - 1 ? 0 : i + 1);
+  e.preventDefault();
+  items[next].focus();
+});
+toggle.addEventListener("click", () => setNav(!nav.classList.contains("open")));
+nav.addEventListener("click", (e) => {
+  const link = e.target.closest("a");
+  if (!link || !nav.classList.contains("open")) return;
+  setNav(false);
+  // Hand focus to the section we jump to, so it doesn't stay on a hidden menu link
+  const target = document.querySelector(link.getAttribute("href"));
+  if (target) {
+    target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && nav.classList.contains("open")) { setNav(false); toggle.focus(); } });
+const desktopMq = window.matchMedia("(min-width: 961px)");
+const onDesktop = (e) => { if (e.matches) setNav(false); };
+if (desktopMq.addEventListener) desktopMq.addEventListener("change", onDesktop);
+else if (desktopMq.addListener) desktopMq.addListener(onDesktop);
+
+/* Reveal on scroll + active nav link */
+// "?static" shows everything immediately (used for screenshots / QA)
+const staticMode = new URLSearchParams(location.search).has("static") || !("IntersectionObserver" in window);
+const io = staticMode ? null : new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }
+}, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+document.querySelectorAll(".reveal").forEach((el, i) => {
+  if (staticMode) { el.classList.add("in"); return; }
+  el.style.transitionDelay = `${(i % 3) * 80}ms`;
+  io.observe(el);
+});
+
+const navLinks = [...document.querySelectorAll(".main-nav ul a")];
+const spy = staticMode ? null : new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    const id = entry.target.id;
+    navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${id}`));
+  }
+}, { rootMargin: "-45% 0px -50% 0px" });
+if (spy) {
+  document.querySelectorAll("main section[id]").forEach((s) => spy.observe(s));
+  // Hide the floating CTA whenever any part of the contact section is on screen
+  new IntersectionObserver(([entry]) => { contactVisible = entry.isIntersecting; onScroll(); }).observe(contactSection);
+}
+onScroll();
+
+/* CTA buttons preselect the service in the form */
+document.querySelectorAll("[data-service]").forEach((el) => {
+  el.addEventListener("click", () => {
+    const radio = document.querySelector(`input[name="service"][value="${el.dataset.service}"]`);
+    if (radio) radio.checked = true;
+  });
+});
+
+/* Lightbox */
+const lightbox = document.getElementById("lightbox");
+const lbImg = document.getElementById("lightbox-img");
+const lbCaption = document.getElementById("lightbox-caption");
+let lastTrigger = null;
+
+document.querySelectorAll(".art-open").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    lastTrigger = btn;
+    const thumb = btn.querySelector("img");
+    lbImg.src = btn.dataset.full;
+    lbImg.alt = thumb.alt;
+    lbCaption.textContent = btn.dataset.caption || "";
+    if (typeof lightbox.showModal === "function") lightbox.showModal();
+    else window.location.href = btn.dataset.full;
+  });
+});
+lightbox.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
+lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.close(); });
+lightbox.addEventListener("close", () => { lbImg.src = ""; lastTrigger?.focus(); });
+
+/* Contact form */
+const form = document.getElementById("contact-form");
+const statusEl = document.getElementById("form-status");
+const nameInput = document.getElementById("f-name");
+const nameError = document.getElementById("err-name");
+const directLinks = document.getElementById("direct-links");
+const copyBox = document.getElementById("copy-box");
+const copyText = document.getElementById("copy-text");
+const copyBtn = document.getElementById("copy-btn");
+form.querySelector("button[type=submit]").disabled = false;
+
+function buildMessage(data) {
+  const lines = [
+    "היי יובל 🤍",
+    `שמי ${data.name}.`,
+    `אני מתעניינת ב: ${SERVICE_LABELS[data.service] || SERVICE_LABELS.general}`,
+  ];
+  if (data.phone) lines.push(`טלפון: ${data.phone}`);
+  if (data.message) lines.push("", data.message);
+  return lines.join("\n");
+}
+
+function contactUrl(text) {
+  if (CONTACT.whatsapp) return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`;
+  if (CONTACT.email) return `mailto:${CONTACT.email}?subject=${encodeURIComponent("פנייה מהאתר · Light Codes")}&body=${encodeURIComponent(text)}`;
+  return "";
+}
+
+nameInput.addEventListener("input", () => {
+  if (nameInput.value.trim()) { nameInput.removeAttribute("aria-invalid"); nameError.textContent = ""; }
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  const data = {
+    service: fd.get("service"),
+    name: String(fd.get("name") || "").trim(),
+    phone: String(fd.get("phone") || "").trim(),
+    message: String(fd.get("message") || "").trim(),
+  };
+
+  if (!data.name) {
+    nameInput.setAttribute("aria-invalid", "true");
+    nameInput.setAttribute("aria-describedby", "err-name");
+    nameError.textContent = "איך לקרוא לך?";
+    nameInput.focus();
+    return;
+  }
+
+  const text = buildMessage(data);
+  const url = contactUrl(text);
+
+  if (url) {
+    // A real link click: opens WhatsApp / the mail app once, without popup heuristics.
+    // On phones (incl. Instagram/TikTok in-app browsers) stay in the same tab: new windows may be blocked there.
+    const a = document.createElement("a");
+    a.href = url;
+    const isPhone = window.matchMedia("(pointer: coarse)").matches;
+    if (url.startsWith("https:") && !isPhone) { a.target = "_blank"; a.rel = "noopener"; }
+    document.body.append(a);
+    a.click();
+    a.remove();
+    statusEl.textContent = CONTACT.whatsapp
+      ? "ההודעה נפתחה ב־WhatsApp. נשאר רק ללחוץ שליחה שם, ואחזור אלייך בהקדם 🤍"
+      : "ההודעה נפתחה באפליקציית המייל. נשאר רק ללחוץ שליחה שם, ואחזור אלייך בהקדם 🤍";
+    return;
+  }
+
+  // No contact channel configured: be honest, and hand the visitor a ready-to-copy message
+  copyText.value = text;
+  copyBox.hidden = false;
+  statusEl.textContent = socials.length
+    ? "ההודעה עדיין לא נשלחה. אפשר להעתיק אותה ולשלוח לי באחד הערוצים כאן למטה."
+    : "ההודעה עדיין לא נשלחה. אפשר להעתיק אותה ולשלוח לי ישירות.";
+});
+
+copyBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(copyText.value);
+    copyBtn.textContent = "הועתק ✓";
+  } catch {
+    copyText.select();
+    copyBtn.textContent = "מסומן, אפשר להעתיק";
+  }
+});
+
+/* Social + direct links from CONTACT */
+const socials = [
+  CONTACT.whatsapp && { label: "WhatsApp", href: `https://wa.me/${CONTACT.whatsapp}` },
+  CONTACT.instagram && { label: "Instagram", href: CONTACT.instagram },
+  CONTACT.tiktok && { label: "TikTok", href: CONTACT.tiktok },
+  CONTACT.email && { label: CONTACT.email, href: `mailto:${CONTACT.email}` },
+].filter(Boolean);
+
+const socialList = document.getElementById("social-links");
+for (const s of socials) {
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+  a.href = s.href;
+  a.textContent = s.label;
+  if (s.href.startsWith("http")) { a.target = "_blank"; a.rel = "noopener"; }
+  li.append(a);
+  socialList.append(li);
+  directLinks.append(a.cloneNode(true));
+}
+
+if (!CONTACT.whatsapp && !CONTACT.email) {
+  document.getElementById("form-intro").textContent = "משאירים כמה פרטים, ומקבלים הודעה מוכנה לשליחה אליי.";
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
