@@ -65,6 +65,31 @@ const onDesktop = (e) => { if (e.matches) setNav(false); };
 if (desktopMq.addEventListener) desktopMq.addEventListener("change", onDesktop);
 else if (desktopMq.addListener) desktopMq.addListener(onDesktop);
 
+/* Headings rise word by word as they enter */
+function splitWords(el) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) if (walker.currentNode.textContent.trim()) nodes.push(walker.currentNode);
+  let i = 0;
+  for (const node of nodes) {
+    const frag = document.createDocumentFragment();
+    for (const part of node.textContent.split(/(\s+)/)) {
+      if (!part) continue;
+      if (/^\s+$/.test(part)) { frag.append(part); continue; }
+      const w = document.createElement("span");
+      w.className = "w";
+      w.style.setProperty("--i", i++);
+      w.textContent = part;
+      frag.append(w);
+    }
+    node.replaceWith(frag);
+  }
+  el.classList.add("split");
+}
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !new URLSearchParams(location.search).has("static")) {
+  document.querySelectorAll(".reveal .h2, .display").forEach(splitWords);
+}
+
 /* Reveal on scroll + active nav link */
 // "?static" shows everything immediately (used for screenshots / QA)
 const staticMode = new URLSearchParams(location.search).has("static") || !("IntersectionObserver" in window);
@@ -141,26 +166,97 @@ document.querySelectorAll("[data-service]").forEach((el) => {
   });
 });
 
-/* Lightbox */
+/* Lightbox: browse the paintings, ask about the one you're looking at */
 const lightbox = document.getElementById("lightbox");
 const lbImg = document.getElementById("lightbox-img");
 const lbCaption = document.getElementById("lightbox-caption");
+const lbNow = document.getElementById("lb-now");
+const lbAsk = document.getElementById("lb-ask");
+const artButtons = [...document.querySelectorAll(".art-open")];
+document.getElementById("lb-total").textContent = String(artButtons.length).padStart(2, "0");
+let lbIndex = 0;
 let lastTrigger = null;
 
-document.querySelectorAll(".art-open").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    lastTrigger = btn;
-    const thumb = btn.querySelector("img");
-    lbImg.src = btn.dataset.full;
-    lbImg.alt = thumb.alt;
-    lbCaption.textContent = btn.dataset.caption || "";
-    if (typeof lightbox.showModal === "function") lightbox.showModal();
-    else window.location.href = btn.dataset.full;
-  });
+function showArt(i) {
+  lbIndex = (i + artButtons.length) % artButtons.length;
+  const btn = artButtons[lbIndex];
+  lbImg.src = btn.dataset.full;
+  lbImg.alt = btn.querySelector("img").alt;
+  lbCaption.textContent = btn.dataset.caption || "";
+  lbImg.classList.toggle("is-round", "round" in btn.dataset);
+  lbNow.textContent = String(lbIndex + 1).padStart(2, "0");
+  document.getElementById("lb-live").textContent = `ציור ${lbIndex + 1} מתוך ${artButtons.length}: ${btn.dataset.title}`;
+  const ready = btn.dataset.kind === "ready";
+  lbAsk.textContent = ready ? "אני רוצה את הציור הזה" : "אני רוצה ציור כזה, משלי";
+  lbAsk.dataset.service = ready ? "ready" : "custom";
+}
+
+function openArt(btn) {
+  lastTrigger = btn;
+  if (typeof lightbox.showModal !== "function") { window.location.href = btn.dataset.full; return; }
+  const thumb = btn.querySelector("img");
+  const open = () => { showArt(artButtons.indexOf(btn)); lightbox.showModal(); };
+  // The painting grows out of its frame where View Transitions are supported
+  if (document.startViewTransition && !reduceMotion.matches) {
+    thumb.style.viewTransitionName = "art";
+    document.startViewTransition(() => {
+      thumb.style.viewTransitionName = "";
+      lbImg.style.viewTransitionName = "art";
+      open();
+    }).finished.finally(() => { lbImg.style.viewTransitionName = ""; });
+  } else open();
+}
+artButtons.forEach((btn) => btn.addEventListener("click", () => openArt(btn)));
+
+const step = (d) => showArt(lbIndex + d);
+lightbox.querySelector(".lb-prev").addEventListener("click", () => step(-1));
+lightbox.querySelector(".lb-next").addEventListener("click", () => step(1));
+lightbox.addEventListener("keydown", (e) => {
+  // RTL: the left arrow moves forward
+  if (e.key === "ArrowLeft") step(1);
+  if (e.key === "ArrowRight") step(-1);
+});
+let touchX = null;
+lightbox.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener("touchend", (e) => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  touchX = null;
+  if (Math.abs(dx) > 50) step(dx > 0 ? 1 : -1);
 });
 lightbox.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
 lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.close(); });
-lightbox.addEventListener("close", () => { lbImg.src = ""; lastTrigger?.focus(); });
+lightbox.addEventListener("close", () => { lbImg.src = ""; if (!lbAsk.dataset.going) lastTrigger?.focus(); delete lbAsk.dataset.going; });
+
+// "I want this painting": close, pick the service and start the message for her
+lbAsk.addEventListener("click", (e) => {
+  e.preventDefault();
+  const btn = artButtons[lbIndex];
+  const ready = btn.dataset.kind === "ready";
+  const radio = document.querySelector(`input[name="service"][value="${lbAsk.dataset.service}"]`);
+  if (radio) radio.checked = true;
+  // Replace our own earlier suggestion, but never text the visitor wrote herself
+  const msg = document.getElementById("f-message");
+  if (!msg.value.trim() || msg.value === lbAsk.dataset.auto) {
+    msg.value = ready ? `אני מתעניינת בציור "${btn.dataset.title}".` : `ראיתי את הציור "${btn.dataset.title}" ואני רוצה ציור אישי משלי.`;
+    lbAsk.dataset.auto = msg.value;
+  }
+  lbAsk.dataset.going = "1";
+  lightbox.close();
+  document.getElementById("contact").scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
+  document.getElementById("f-name").focus({ preventScroll: true });
+});
+
+/* Soft light that follows the pointer across a painting (mouse only) */
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  document.querySelectorAll(".art-open .mat, .hero-art .round").forEach((el) => {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+      el.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+    });
+  });
+}
 
 /* Contact form */
 const form = document.getElementById("contact-form");
@@ -227,6 +323,7 @@ form.addEventListener("submit", (e) => {
     statusEl.textContent = CONTACT.whatsapp
       ? "ההודעה נפתחה ב־WhatsApp. נשאר רק ללחוץ שליחה שם, ואחזור אלייך בהקדם 🤍"
       : "ההודעה נפתחה באפליקציית המייל. נשאר רק ללחוץ שליחה שם, ואחזור אלייך בהקדם 🤍";
+    showDone(url);
     return;
   }
 
@@ -236,6 +333,24 @@ form.addEventListener("submit", (e) => {
   statusEl.textContent = socials.length
     ? "ההודעה עדיין לא נשלחה. אפשר להעתיק אותה ולשלוח לי באחד הערוצים כאן למטה."
     : "ההודעה עדיין לא נשלחה. אפשר להעתיק אותה ולשלוח לי ישירות.";
+});
+
+/* Thank-you state after the hand-off */
+const formDone = document.getElementById("form-done");
+function showDone(url) {
+  const reopen = document.getElementById("done-reopen");
+  reopen.href = url;
+  if (url.startsWith("https:") && !window.matchMedia("(pointer: coarse)").matches) { reopen.target = "_blank"; reopen.rel = "noopener"; }
+  form.classList.add("sent");
+  formDone.hidden = false;
+  formDone.focus({ preventScroll: true });
+}
+document.getElementById("done-reset").addEventListener("click", () => {
+  form.reset();
+  form.classList.remove("sent");
+  formDone.hidden = true;
+  statusEl.textContent = "";
+  nameInput.focus();
 });
 
 copyBtn.addEventListener("click", async () => {

@@ -1,5 +1,176 @@
 /* Yuval's Light Codes · "The Listening Gallery" */
 
+/* Self-hosted Google Fonts (hebrew + latin subsets) */
+/* latin */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/CormorantGaramond-latin-fe99e3.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/CormorantGaramond-latin-fe99e3.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/CormorantGaramond-latin-e99b45.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/CormorantGaramond-latin-e99b45.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(fonts/Heebo-hebrew-77da62.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(fonts/Heebo-latin-51d8f6.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Heebo-hebrew-77da62.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Heebo-latin-51d8f6.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/Heebo-hebrew-77da62.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/Heebo-latin-51d8f6.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Heebo-hebrew-77da62.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Heebo-latin-51d8f6.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Noto Serif Hebrew';
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/NotoSerifHebrew-hebrew-48a293.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Noto Serif Hebrew';
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/NotoSerifHebrew-latin-a0b668.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Noto Serif Hebrew';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/NotoSerifHebrew-hebrew-48a293.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Noto Serif Hebrew';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/NotoSerifHebrew-latin-a0b668.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Noto Serif Hebrew';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/NotoSerifHebrew-hebrew-48a293.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Noto Serif Hebrew';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(fonts/NotoSerifHebrew-latin-a0b668.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
 :root {
   --paper: #f2eee7;
   --paper-2: #e9e3d9;
@@ -39,6 +210,7 @@ body {
 }
 body.nav-open { overflow: hidden; }
 img { max-width: 100%; height: auto; display: block; }
+picture { display: contents; }
 a { color: inherit; }
 a, button, summary, label { -webkit-tap-highlight-color: transparent; }
 p { margin: 0 0 1em; }
@@ -166,7 +338,7 @@ bdi[lang="en"] { font-family: inherit; }
   font-family: var(--serif); font-weight: 300; color: var(--ink);
   font-size: clamp(3.1rem, 7.1vw, 6.6rem); line-height: 1.02; letter-spacing: -.02em; margin-bottom: 34px;
 }
-.display span { display: block; color: var(--lav-text); }
+.display > span:not(.w) { display: block; color: var(--lav-text); }
 .hero .lead { max-width: 30em; margin-bottom: 40px; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 34px; }
 
@@ -250,6 +422,7 @@ bdi[lang="en"] { font-family: inherit; }
 .path-dark::before {
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: .35;
   background: url("img/texture-violet-gold-800.jpg") center / cover;
+  background: image-set(url("img/texture-violet-gold-800.avif") type("image/avif"), url("img/texture-violet-gold-800.webp") type("image/webp"), url("img/texture-violet-gold-800.jpg") type("image/jpeg")) center / cover;
 }
 .path-dark::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(160deg, rgba(34,21,43,.55), rgba(34,21,43,.95) 60%); }
 .path-light { background: var(--card); border: 1px solid var(--line); }
@@ -351,6 +524,7 @@ bdi[lang="en"] { font-family: inherit; }
 .contact::before {
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: .22;
   background: url("img/texture-violet-gold-800.jpg") center / cover;
+  background: image-set(url("img/texture-violet-gold-800.avif") type("image/avif"), url("img/texture-violet-gold-800.webp") type("image/webp"), url("img/texture-violet-gold-800.jpg") type("image/jpeg")) center / cover;
 }
 .contact::after {
   content: ""; position: absolute; z-index: -1; width: 60vw; aspect-ratio: 1; border-radius: 50%;
@@ -573,7 +747,7 @@ main section[tabindex="-1"]:focus, main article[tabindex="-1"]:focus { outline: 
 }
 .round img { width: 100%; border-radius: 50%; clip-path: circle(48.6%); }
 .js .hero-art .round img { animation: unveilRound 1.4s var(--ease) .15s both; }
-@keyframes unveilRound { from { clip-path: circle(0%); transform: scale(1.08); } to { clip-path: circle(48.6%); transform: none; } }
+@keyframes unveilRound { from { clip-path: circle(30%); transform: scale(1.06); } to { clip-path: circle(48.6%); transform: none; } }
 .hero-art .halo { width: 124%; translate: -50% -50%; }
 .mat-round img { border-radius: 50%; clip-path: circle(48.6%); }
 .voice-round img { border-radius: 50%; clip-path: circle(48.6%); }
@@ -610,3 +784,74 @@ main:focus { outline: none; }
 }
 .nav-toggle, .header-cta { flex: none; }
 @media (max-width: 600px) { .header-cta { min-height: 44px; } }
+
+/* ---------- Words rise into place ---------- */
+.split .w { display: inline-block; }
+.js .reveal .split .w {
+  opacity: 0; transform: translateY(.45em);
+  transition: opacity .8s var(--ease), transform .9s var(--ease);
+  transition-delay: calc(var(--i) * 55ms + 120ms);
+}
+.js .reveal.in .split .w { opacity: 1; transform: none; }
+@media (min-width: 961px) { .js .display.split .w { animation: wordUp .9s var(--ease) both; animation-delay: calc(var(--i) * 70ms + 250ms); } }
+@keyframes wordUp { from { opacity: 0; transform: translateY(.45em); } to { opacity: 1; transform: none; } }
+
+/* ---------- Light that follows the pointer ---------- */
+.art-open .mat, .hero-art .round { --mx: 50%; --my: 40%; }
+.art-open .mat::after, .hero-art .round::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--mx) var(--my), rgba(255, 246, 224, .55), transparent 42%);
+  mix-blend-mode: soft-light; transition: opacity .5s var(--ease);
+}
+.art-open:hover .mat::after, .hero-art .round:hover::after { opacity: 1; }
+
+/* ---------- Lightbox: a quiet viewing room ---------- */
+.lightbox { width: min(1100px, 100vw - 32px); max-width: none; max-height: none; overflow: visible; }
+.lightbox::backdrop { background: rgba(26, 16, 33, .94); }
+.lb-figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+.lightbox img { max-height: 74vh; max-height: 74svh; width: auto; max-width: 100%; padding: 12px; background: var(--card); border-radius: 0; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .7); }
+.lb-caption { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 22px; margin-top: 20px; color: #fff; text-align: center; }
+.lb-caption p { margin: 0; }
+.lightbox #lightbox-caption { font-family: var(--serif); font-size: 1.2rem; }
+.lb-count { font-family: var(--latin); letter-spacing: .1em; color: rgba(243, 236, 247, .7); font-size: 1.1rem; }
+.lb-nav {
+  position: absolute; top: 40%; width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(26, 16, 33, .5); color: #fff; display: grid; place-items: center; cursor: pointer; transition: background .3s;
+}
+.lb-nav:hover { background: rgba(255, 255, 255, .15); }
+.lb-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.lb-prev { inset-inline-start: -8px; }
+.lb-next { inset-inline-end: -8px; }
+.lightbox-close { top: -8px; inset-inline-end: -8px; }
+.lightbox :focus-visible { outline-color: var(--brass-pale); }
+::view-transition-group(art) { animation-duration: .55s; animation-timing-function: cubic-bezier(.22, .61, .36, 1); }
+@media (max-width: 600px) {
+  .lightbox { width: calc(100vw - 16px); }
+  .lightbox img { max-height: 62vh; max-height: 62svh; padding: 8px; }
+  .lb-nav { top: auto; bottom: -70px; width: 48px; height: 48px; }
+  .lb-prev { inset-inline-start: 8px; }
+  .lb-next { inset-inline-end: 8px; }
+  .lb-caption { margin-bottom: 64px; }
+  .lightbox-close { top: -54px; inset-inline-end: 4px; }
+}
+
+/* ---------- After sending ---------- */
+.contact-form.sent > :not(.form-done) { display: none; }
+.form-done { text-align: center; padding: 12px 0 4px; }
+.form-done[hidden] { display: none; }
+.form-done:focus { outline: none; }
+.form-done .h3 { margin-bottom: 12px; }
+.form-done p { color: var(--ink-soft); margin-bottom: 26px; }
+.form-done .link-arrow { margin-top: 10px; background-color: transparent; border: 0; cursor: pointer; font: inherit; }
+.done-mark {
+  display: block; width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #fff6e0 0, #e7c98f 38%, #9b7ac4 78%, #6e4fa0 100%);
+  box-shadow: 0 0 0 8px rgba(167, 126, 67, .12), 0 0 40px rgba(231, 201, 143, .9);
+  animation: glow 2.4s ease-in-out infinite alternate;
+}
+@keyframes glow { to { box-shadow: 0 0 0 12px rgba(167, 126, 67, .08), 0 0 60px rgba(231, 201, 143, 1); } }
+@media (max-width: 340px) { .brand-text { font-size: 1.04rem; } .header-cta { padding: 0 10px; } }
+.lightbox img.is-round { border-radius: 50%; clip-path: circle(48.6%); padding: 0; background: none; box-shadow: none; }
+
+@media (max-width: 600px) { .js .hero-art .round img { animation: none; } }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
