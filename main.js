@@ -158,7 +158,9 @@ function trackRail() {
   });
   let best = seen.findIndex((f) => f > 0.95);
   if (best === -1) best = seen.indexOf(Math.max(...seen));
-  if (Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 4) best = works.length - 1;
+  // RTL scrollLeft runs from 0 to -max (Safari may overshoot while bouncing)
+  const maxScroll = rail.scrollWidth - rail.clientWidth;
+  if (maxScroll > 0 && rail.scrollLeft <= -maxScroll + 4) best = works.length - 1;
   setCurrent(best);
 }
 let railTick = 0;
@@ -233,7 +235,7 @@ lightbox.addEventListener("touchend", (e) => {
 });
 lightbox.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
 lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.close(); });
-lightbox.addEventListener("close", () => { lbImg.src = ""; if (!lbAsk.dataset.going) lastTrigger?.focus(); delete lbAsk.dataset.going; });
+lightbox.addEventListener("close", () => { lbImg.removeAttribute("src"); if (!lbAsk.dataset.going) lastTrigger?.focus(); delete lbAsk.dataset.going; });
 
 // "I want this painting": close, pick the service and start the message for her
 lbAsk.addEventListener("click", (e) => {
@@ -279,7 +281,7 @@ function buildMessage(data) {
   const lines = [
     "היי יובל 🤍",
     `שמי ${data.name}.`,
-    `אני מתעניינת ב: ${SERVICE_LABELS[data.service] || SERVICE_LABELS.general}`,
+    `אני מתעניינת בנושא: ${SERVICE_LABELS[data.service] || SERVICE_LABELS.general}`,
   ];
   if (data.phone) lines.push(`טלפון: ${data.phone}`);
   if (data.message) lines.push("", data.message);
@@ -328,8 +330,8 @@ form.addEventListener("submit", (e) => {
     a.click();
     a.remove();
     statusEl.textContent = CONTACT.whatsapp
-      ? "ההודעה נפתחה ב־WhatsApp. נשאר רק ללחוץ שליחה שם, ואחזור אלייך בהקדם 🤍"
-      : "ההודעה נפתחה באפליקציית המייל. נשאר רק ללחוץ שליחה שם, ואחזור אלייך בהקדם 🤍";
+      ? "ההודעה נפתחה ב־WhatsApp. נשאר רק ללחוץ שם על כפתור השליחה, ואחזור אלייך בהקדם 🤍"
+      : "ההודעה נפתחה באפליקציית המייל. נשאר רק ללחוץ שם על כפתור השליחה, ואחזור אלייך בהקדם 🤍";
     showDone(url);
     return;
   }
@@ -344,15 +346,18 @@ form.addEventListener("submit", (e) => {
 
 /* Thank-you state after the hand-off */
 const formDone = document.getElementById("form-done");
-function showDone(url) {
+function showDone(url, focus = true) {
   const reopen = document.getElementById("done-reopen");
   reopen.href = url;
   if (url.startsWith("https:") && !window.matchMedia("(pointer: coarse)").matches) { reopen.target = "_blank"; reopen.rel = "noopener"; }
   form.classList.add("sent");
   formDone.hidden = false;
-  formDone.focus({ preventScroll: true });
+  if (focus) formDone.focus({ preventScroll: true });
+  // Remember the hand-off for this tab, so coming back from WhatsApp still shows the thank-you
+  try { sessionStorage.setItem("lc-sent", JSON.stringify({ url, t: Date.now() })); } catch {}
 }
 document.getElementById("done-reset").addEventListener("click", () => {
+  try { sessionStorage.removeItem("lc-sent"); } catch {}
   form.reset();
   form.classList.remove("sent");
   formDone.hidden = true;
@@ -360,13 +365,18 @@ document.getElementById("done-reset").addEventListener("click", () => {
   nameInput.focus();
 });
 
+try {
+  const sent = JSON.parse(sessionStorage.getItem("lc-sent") || "null");
+  if (sent && Date.now() - sent.t < 30 * 60 * 1000) showDone(sent.url, false);
+} catch {}
+
 copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(copyText.value);
     copyBtn.textContent = "הועתק ✓";
   } catch {
     copyText.select();
-    copyBtn.textContent = "מסומן, אפשר להעתיק";
+    copyBtn.textContent = "הטקסט סומן, אפשר להעתיק";
   }
 });
 
@@ -390,7 +400,7 @@ for (const s of socials) {
 }
 
 if (!CONTACT.whatsapp && !CONTACT.email) {
-  document.getElementById("form-intro").textContent = "משאירים כמה פרטים, ומקבלים הודעה מוכנה לשליחה אליי.";
+  document.getElementById("form-intro").textContent = "השאירי כמה פרטים ואכין לך הודעה מוכנה להעתקה.";
 }
 
 document.getElementById("year").textContent = new Date().getFullYear();

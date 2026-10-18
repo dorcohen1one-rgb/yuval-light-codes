@@ -1,12 +1,12 @@
-<!doctype html>
-<html lang="he" dir="rtl">
+<!DOCTYPE html>
+<html lang="he" dir="rtl" class="theme-white">
 <head>
 <meta name="robots" content="noindex">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Yuval's Light Codes · תקשור, אנרגיה ויצירה</title>
   <meta name="description" content="Yuval's Light Codes: תקשור אישי בטלפון, Zoom או WhatsApp, וציורי Light Codes אנרגטיים שנוצרים מתוך הקשבה, צבע ותנועה. מוכנים או בהתאמה אישית.">
-  <meta name="theme-color" content="#10132a">
+  <meta name="theme-color" content="#fbfaf7">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -21,7 +21,7 @@
   <meta property="og:image" content="https://dorcohen1one-rgb.github.io/yuval-light-codes/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Yuval's Light Codes: הציור העגול תקווה והכותרת יש בתוכך מקום שיודע">
+  <meta property="og:image:alt" content="Yuval's Light Codes: הציור העגול &quot;תקווה&quot; לצד הכותרת &quot;יש בתוכך מקום שיודע&quot;">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Yuval's Light Codes · תקשור, אנרגיה ויצירה">
   <meta name="twitter:image" content="https://dorcohen1one-rgb.github.io/yuval-light-codes/img/og.jpg">
@@ -49,8 +49,15 @@
 
   <link rel="preload" as="font" type="font/woff2" href="fonts/NotoSerifHebrew-hebrew-48a293.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="fonts/Heebo-hebrew-77da62.woff2" crossorigin>
-  <link rel="preload" as="image" type="image/avif" imagesrcset="img/art-hope-round-480.avif 480w, img/art-hope-round-640.avif 640w, img/art-hope-round.avif 976w" imagesizes="(max-width: 600px) 76vw, (max-width: 960px) 420px, 500px" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=1792342868">
+  <link rel="preload" as="image" type="image/avif" href="img/art-hope-round-480.avif" imagesrcset="img/art-hope-round-480.avif 480w, img/art-hope-round-640.avif 640w, img/art-hope-round.avif 976w" imagesizes="(max-width: 600px) 76vw, (max-width: 960px) 420px, 500px" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css?v=1792343789">
+  <script>
+    // Gallery White is the default; ?theme=dark previews the Midnight Gallery version
+    if (new URLSearchParams(location.search).get("theme") === "dark") {
+      document.documentElement.classList.remove("theme-white");
+      document.querySelector('meta[name="theme-color"]').content = "#10132a";
+    }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">דילוג לתוכן</a>
@@ -84,7 +91,7 @@
 
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
-      <p class="wrap" role="note" style="margin:0 auto 28px;text-align:center"><span style="display:inline-block;padding:6px 16px;border-radius:999px;background:#f7f2e9;color:#10132a;font-size:14px;line-height:1.5">טיוטה: הצעה לעיצוב חדש, עדיין לא האתר הרשמי</span></p>
+      <p class="wrap" role="note" style="margin:0 auto 28px;text-align:center"><span style="display:inline-block;padding:6px 16px;border-radius:999px;background:#17142a;color:#fff;font-size:14px;line-height:1.5">טיוטה: הצעה לעיצוב חדש, עדיין לא האתר הרשמי</span></p>
       <div class="wrap hero-grid">
         <div class="hero-copy">
           <p class="kicker"><span>תקשור</span><span>אנרגיה</span><span>יצירה</span></p>
@@ -108,7 +115,7 @@
         </figure>
       </div>
 
-      <ul class="ribbon wrap" aria-label="מה יש כאן">
+      <ul class="ribbon wrap">
         <li>מסר</li><li>חיבור</li><li>ריפוי</li><li>בהירות</li>
       </ul>
     </section>
@@ -119,7 +126,7 @@
         <header class="works-head reveal">
           <p class="label" lang="en">Light Codes</p>
           <h2 id="works-title" class="h2">ציורים שנולדים מתוך <em>הקשבה</em></h2>
-          <p class="sub">כל ציור נוצר מתוך יצירה אינטואיטיבית וחיבור לאנרגיה. צבעים, צורות, תנועה וסמלים מתחברים לעולם אחד. אין שני ציורים זהים.</p>
+          <p class="sub">כל ציור נוצר מתוך הקשבה אינטואיטיבית וחיבור לאנרגיה. צבעים, צורות, תנועה וסמלים מתחברים לעולם אחד. אין שני ציורים זהים.</p>
           <div class="rail-nav">
             <button class="rail-btn" type="button" data-dir="prev" aria-label="הציור הקודם" aria-controls="rail">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
@@ -134,7 +141,7 @@
         <ol class="rail" id="rail" aria-label="ציורי Light Codes" tabindex="0">
           <li class="work">
             <button class="art-open" type="button" data-full="img/art-mountains-c.webp" data-title="גאות אל השלווה" data-kind="ready" data-caption="גאות אל השלווה · זמין · 110 ₪">
-              <span class="mat"><picture><source type="image/avif" srcset="img/art-mountains-c-480.avif 480w, img/art-mountains-c-800.avif 640w, img/art-mountains-c.avif 960w" sizes="(max-width: 600px) 76vw, 360px"><source type="image/webp" srcset="img/art-mountains-c-480.webp 480w, img/art-mountains-c-800.webp 640w, img/art-mountains-c.webp 960w" sizes="(max-width: 600px) 76vw, 360px"><img src="img/art-mountains-c-800.jpg" srcset="img/art-mountains-c-480.jpg 480w, img/art-mountains-c-800.jpg 640w, img/art-mountains-c.jpg 960w" sizes="(max-width: 600px) 76vw, 360px" alt="גאות אל השלווה: הרים כחולים מעל ים גועש" width="640" height="800" loading="lazy"></picture></span>
+              <span class="mat"><picture><source type="image/avif" srcset="img/art-mountains-c-480.avif 480w, img/art-mountains-c-800.avif 640w, img/art-mountains-c.avif 960w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 260px, 360px"><source type="image/webp" srcset="img/art-mountains-c-480.webp 480w, img/art-mountains-c-800.webp 640w, img/art-mountains-c.webp 960w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 260px, 360px"><img src="img/art-mountains-c-800.jpg" srcset="img/art-mountains-c-480.jpg 480w, img/art-mountains-c-800.jpg 640w, img/art-mountains-c.jpg 960w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 260px, 360px" alt="גאות אל השלווה: הרים כחולים מעל ים גועש" width="640" height="800" loading="lazy"></picture></span>
             </button>
             <p class="work-theme">בהירות · התחלה</p>
             <h3 class="work-title">גאות אל השלווה</h3>
@@ -142,7 +149,7 @@
           </li>
           <li class="work">
             <button class="art-open" type="button" data-full="img/art-healing-water-c.webp" data-title="ריפוי המים" data-kind="ready" data-caption="ריפוי המים · זמין · 100 ₪">
-              <span class="mat"><picture><source type="image/avif" srcset="img/art-healing-water-c-480.avif 480w, img/art-healing-water-c-800.avif 800w, img/art-healing-water-c.avif 864w" sizes="(max-width: 600px) 76vw, 470px"><source type="image/webp" srcset="img/art-healing-water-c-480.webp 480w, img/art-healing-water-c-800.webp 800w, img/art-healing-water-c.webp 864w" sizes="(max-width: 600px) 76vw, 470px"><img src="img/art-healing-water-c-800.jpg" srcset="img/art-healing-water-c-480.jpg 480w, img/art-healing-water-c-800.jpg 800w, img/art-healing-water-c.jpg 864w" sizes="(max-width: 600px) 76vw, 470px" alt="ריפוי המים: גלים כחולים וטורקיז מול צוק חום" width="800" height="770" loading="lazy"></picture></span>
+              <span class="mat"><picture><source type="image/avif" srcset="img/art-healing-water-c-480.avif 480w, img/art-healing-water-c-800.avif 800w, img/art-healing-water-c.avif 864w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 340px, 470px"><source type="image/webp" srcset="img/art-healing-water-c-480.webp 480w, img/art-healing-water-c-800.webp 800w, img/art-healing-water-c.webp 864w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 340px, 470px"><img src="img/art-healing-water-c-800.jpg" srcset="img/art-healing-water-c-480.jpg 480w, img/art-healing-water-c-800.jpg 800w, img/art-healing-water-c.jpg 864w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 340px, 470px" alt="ריפוי המים: גלים כחולים וטורקיז מול צוק חום" width="800" height="770" loading="lazy"></picture></span>
             </button>
             <p class="work-theme">ריפוי · רכות</p>
             <h3 class="work-title">ריפוי המים</h3>
@@ -158,7 +165,7 @@
           </li>
           <li class="work">
             <button class="art-open" type="button" data-full="img/art-pink-sea-c.webp" data-title="חופש מול הים" data-kind="custom" data-caption="חופש מול הים · נוצר עבור רחל">
-              <span class="mat"><picture><source type="image/avif" srcset="img/art-pink-sea-c-480.avif 480w, img/art-pink-sea-c-800.avif 800w, img/art-pink-sea-c.avif 972w" sizes="(max-width: 600px) 76vw, 730px"><source type="image/webp" srcset="img/art-pink-sea-c-480.webp 480w, img/art-pink-sea-c-800.webp 800w, img/art-pink-sea-c.webp 972w" sizes="(max-width: 600px) 76vw, 730px"><img src="img/art-pink-sea-c-800.jpg" srcset="img/art-pink-sea-c-480.jpg 480w, img/art-pink-sea-c-800.jpg 800w, img/art-pink-sea-c.jpg 972w" sizes="(max-width: 600px) 76vw, 730px" alt="חופש מול הים: הרים ורודים מעל ים נוצץ" width="800" height="494" loading="lazy"></picture></span>
+              <span class="mat"><picture><source type="image/avif" srcset="img/art-pink-sea-c-480.avif 480w, img/art-pink-sea-c-800.avif 800w, img/art-pink-sea-c.avif 972w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 520px, 730px"><source type="image/webp" srcset="img/art-pink-sea-c-480.webp 480w, img/art-pink-sea-c-800.webp 800w, img/art-pink-sea-c.webp 972w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 520px, 730px"><img src="img/art-pink-sea-c-800.jpg" srcset="img/art-pink-sea-c-480.jpg 480w, img/art-pink-sea-c-800.jpg 800w, img/art-pink-sea-c.jpg 972w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 520px, 730px" alt="חופש מול הים: הרים ורודים מעל ים נוצץ" width="800" height="494" loading="lazy"></picture></span>
             </button>
             <p class="work-theme">חופש · רגישות</p>
             <h3 class="work-title">חופש מול הים</h3>
@@ -166,7 +173,7 @@
           </li>
           <li class="work">
             <button class="art-open" type="button" data-full="img/art-turquoise-c.webp" data-title="שקט בתוך תנועה" data-kind="custom" data-caption="שקט בתוך תנועה · נוצר עבור מלי">
-              <span class="mat"><picture><source type="image/avif" srcset="img/art-turquoise-c-480.avif 480w, img/art-turquoise-c-800.avif 800w, img/art-turquoise-c.avif 968w" sizes="(max-width: 600px) 76vw, 490px"><source type="image/webp" srcset="img/art-turquoise-c-480.webp 480w, img/art-turquoise-c-800.webp 800w, img/art-turquoise-c.webp 968w" sizes="(max-width: 600px) 76vw, 490px"><img src="img/art-turquoise-c-800.jpg" srcset="img/art-turquoise-c-480.jpg 480w, img/art-turquoise-c-800.jpg 800w, img/art-turquoise-c.jpg 968w" sizes="(max-width: 600px) 76vw, 490px" alt="שקט בתוך תנועה: שני דגים כתומים במערבולת טורקיז" width="800" height="740" loading="lazy"></picture></span>
+              <span class="mat"><picture><source type="image/avif" srcset="img/art-turquoise-c-480.avif 480w, img/art-turquoise-c-800.avif 800w, img/art-turquoise-c.avif 968w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 350px, 490px"><source type="image/webp" srcset="img/art-turquoise-c-480.webp 480w, img/art-turquoise-c-800.webp 800w, img/art-turquoise-c.webp 968w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 350px, 490px"><img src="img/art-turquoise-c-800.jpg" srcset="img/art-turquoise-c-480.jpg 480w, img/art-turquoise-c-800.jpg 800w, img/art-turquoise-c.jpg 968w" sizes="(max-width: 600px) 76vw, (max-width: 960px) 350px, 490px" alt="שקט בתוך תנועה: שני דגים כתומים במערבולת טורקיז" width="800" height="740" loading="lazy"></picture></span>
             </button>
             <p class="work-theme">איזון · רוגע</p>
             <h3 class="work-title">שקט בתוך תנועה</h3>
@@ -195,7 +202,8 @@
               <div><dt>משך</dt><dd>כשעה וחצי עד שעתיים</dd></div>
               <div><dt>איפה</dt><dd>טלפון · <bdi lang="en" dir="ltr">Zoom</bdi> · <bdi lang="en" dir="ltr">WhatsApp</bdi></dd></div>
             </dl>
-            <ul class="chips" aria-label="מה יכול לעלות בסשן">
+            <p class="sr-only">מה יכול לעלות בסשן:</p>
+            <ul class="chips">
               <li>מסרים</li><li>תובנות והכוונה</li><li>ריפוי אנרגטי</li><li>שחזור גלגולים, אם עולה</li>
             </ul>
             <a class="btn btn-light" href="#contact" data-service="channeling">לתאם תקשור</a>
@@ -205,7 +213,7 @@
             <p class="path-num" lang="en">II</p>
             <h3 id="lc-title" class="h3">ציור <bdi lang="en">Light Code</bdi> אישי</h3>
             <p class="price"><small>החל מ־</small><span class="price-num">250</span> ₪</p>
-            <p class="path-text">כאן התהליך מתחיל ממך. אני מתחברת אלייך באופן אינטואיטיבי, והציור מקבל צורה דרך צבע, תנועה, סימנים ואנרגיה. את לא בוחרת ציור שכבר קיים, הוא נולד עבורך, ומגיע אלייך פיזית.</p>
+            <p class="path-text">כאן התהליך מתחיל ממך. אני מתחברת אלייך באופן אינטואיטיבי, והציור מקבל צורה דרך צבע, תנועה, סימנים ואנרגיה. את לא בוחרת ציור שכבר קיים: הוא נולד במיוחד עבורך, ובסוף מגיע אלייך.</p>
             <dl class="facts">
               <div><dt>מחיר</dt><dd>נקבע לפי גודל הציור</dd></div>
               <div><dt>ציור מוכן</dt><dd><span dir="ltr">100–150</span> ₪, <a href="#works">מהגלריה</a></dd></div>
@@ -220,7 +228,7 @@
     <section class="about section" id="about" aria-labelledby="about-title">
       <div class="wrap about-grid">
         <figure class="portrait reveal">
-          <picture><source type="image/avif" srcset="img/yuval-p-480.avif 480w, img/yuval-p-800.avif 640w, img/yuval-p.avif 746w" sizes="(max-width: 960px) 280px, 420px"><source type="image/webp" srcset="img/yuval-p-480.webp 480w, img/yuval-p-800.webp 640w, img/yuval-p.webp 746w" sizes="(max-width: 960px) 280px, 420px"><img src="img/yuval-p-800.jpg" srcset="img/yuval-p-480.jpg 480w, img/yuval-p-800.jpg 640w, img/yuval-p.jpg 746w" sizes="(max-width: 960px) 280px, 420px" alt="יובל, יוצרת ומתקשרת, מחייכת בטבע" width="746" height="933" loading="lazy"></picture>
+          <picture><source type="image/avif" srcset="img/yuval-p-480.avif 480w, img/yuval-p-800.avif 640w, img/yuval-p.avif 746w" sizes="(max-width: 600px) 280px, 440px"><source type="image/webp" srcset="img/yuval-p-480.webp 480w, img/yuval-p-800.webp 640w, img/yuval-p.webp 746w" sizes="(max-width: 600px) 280px, 440px"><img src="img/yuval-p-800.jpg" srcset="img/yuval-p-480.jpg 480w, img/yuval-p-800.jpg 640w, img/yuval-p.jpg 746w" sizes="(max-width: 600px) 280px, 440px" alt="יובל, יוצרת ומתקשרת, מחייכת בטבע" width="746" height="933" loading="lazy"></picture>
           <figcaption>יובל · יוצרת ומתקשרת</figcaption>
         </figure>
         <div class="about-copy reveal">
@@ -244,7 +252,7 @@
           <li class="step reveal">
             <span class="step-num" lang="en">01</span>
             <h3>בוחרות</h3>
-            <p>תקשור אישי או ציור <bdi lang="en">Light Code</bdi>. ואם את עדיין לא בטוחה, זה בסדר. כותבים לי ונבין יחד.</p>
+            <p>תקשור אישי או ציור <bdi lang="en">Light Code</bdi>. ואם את עדיין לא בטוחה, זה בסדר. כתבי לי ונבין יחד.</p>
           </li>
           <li class="step reveal">
             <span class="step-num" lang="en">02</span>
@@ -267,7 +275,7 @@
           <p class="label">מילים שקיבלתי</p>
           <h2 id="t-title" class="h2">מה שהן <em>מרגישות</em></h2>
         </header>
-        <div class="voices-grid" role="region" aria-label="המלצות" tabindex="0">
+        <section class="voices-grid" aria-label="המלצות" tabindex="0">
           <figure class="voice reveal">
             <span class="voice-art voice-round"><picture><source type="image/avif" srcset="img/art-hope-round-480.avif"><source type="image/webp" srcset="img/art-hope-round-480.webp"><img src="img/art-hope-round-480.jpg" alt="" width="640" height="640" loading="lazy"></picture></span>
             <blockquote><p>כשקיבלתי וראיתי את הציור בפעם הראשונה התרגשתי מכמה שהוא עוצמתי… המפל רק המחיש את הזרימה של האנרגיה הטבעית, וההרים הם חוזק והתמדה. תודה יובל שנתת לי להרגיש את זה בכל יום.</p></blockquote>
@@ -283,7 +291,7 @@
             <blockquote><p>הציור מעורר בי תחושה של רוגע פנימי, חיבור לעצמי ולאנשים שאני אוהבת, ותזכורת לכך שגם בתוך תנועה ושינויים אפשר למצוא שקט ואיזון.</p></blockquote>
             <figcaption><strong>מלי</strong><span>על הציור "שקט בתוך תנועה"</span></figcaption>
           </figure>
-        </div>
+        </section>
       </div>
     </section>
 
@@ -314,7 +322,7 @@
           </details>
           <details>
             <summary>איך מזמינים?</summary>
-            <p>בוחרים את מה שמושך אותך ומשאירים פרטים בטופס. נפתחת הודעה מוכנה ב־<bdi lang="en" dir="ltr">WhatsApp</bdi>, ואני חוזרת אלייך להמשך.</p>
+            <p>בחרי את מה שמושך אותך והשאירי פרטים בטופס. נפתחת הודעה מוכנה ב־<bdi lang="en" dir="ltr">WhatsApp</bdi>, ואני חוזרת אלייך להמשך.</p>
           </details>
         </div>
       </div>
@@ -326,12 +334,12 @@
         <div class="contact-copy reveal">
           <p class="label">יצירת קשר</p>
           <h2 id="contact-title" class="h2">אולי את לא צריכה עוד תשובה. <em>אולי רק רגע להקשיב.</em></h2>
-          <p class="lead">למה שאת מרגישה. למה שמבקש מקום. למה שכבר ידעת, ופשוט שכחת להקשיב לו.</p>
+          <p class="lead">למה שאת מרגישה. למה שמבקש מקום. למה שכבר ידעת ופשוט שכחת להקשיב לו.</p>
         </div>
 
         <form class="contact-form reveal" id="contact-form" novalidate>
           <h3 class="h3">בואי נתחבר</h3>
-          <p class="form-intro" id="form-intro">משאירים כמה פרטים, והודעה מוכנה תיפתח לשליחה ישירה אליי.</p>
+          <p class="form-intro" id="form-intro">השאירי כמה פרטים, והודעה מוכנה תיפתח לשליחה ישירה אליי.</p>
           <noscript><p class="form-status">כדי לשלוח את הטופס צריך לאפשר JavaScript בדפדפן.</p></noscript>
 
           <fieldset class="service-pick">
@@ -344,16 +352,16 @@
 
           <div class="field">
             <label for="f-name">שם</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" required>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="100" required>
             <span class="field-error" id="err-name" aria-live="polite"></span>
           </div>
           <div class="field">
             <label for="f-phone">טלפון <span class="opt">(לא חובה)</span></label>
-            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr">
+            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" dir="ltr">
           </div>
           <div class="field">
             <label for="f-message">מה מבקש להגיע? <span class="opt">(לא חובה)</span></label>
-            <textarea id="f-message" name="message" rows="4" maxlength="800" placeholder="שאלה, תחושה, צבעים שאת אוהבת, או כל דבר שמרגיש נכון לשתף"></textarea>
+            <textarea id="f-message" name="message" rows="4" maxlength="800" placeholder="שאלה, תחושה, צבעים שאת אוהבת או כל דבר שמרגיש לך נכון לשתף"></textarea>
           </div>
 
           <button class="btn btn-primary btn-block" type="submit" disabled>שליחה ב־WhatsApp</button>
@@ -368,7 +376,7 @@
           </div>
 
           <div class="copy-box" id="copy-box" hidden>
-            <label for="copy-text">ההודעה שלך, מוכנה להעתקה:</label>
+            <label for="copy-text">ההודעה שלך מוכנה להעתקה:</label>
             <textarea id="copy-text" rows="5" readonly></textarea>
             <button class="btn btn-ghost btn-sm" type="button" id="copy-btn">העתקת ההודעה</button>
           </div>
@@ -380,15 +388,15 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text" lang="en">Yuval's <em>Light Codes</em></span></a>
-      <ul class="footer-links" id="social-links" aria-label="ערוצי קשר"></ul>
+      <nav aria-label="ערוצי קשר"><ul class="footer-links" id="social-links"></ul></nav>
       <p class="disclaimer">השירותים המוצעים באתר ניתנים כחוויה רוחנית ואינטואיטיבית ואינם מהווים תחליף לייעוץ רפואי, פסיכולוגי, משפטי או פיננסי מקצועי.</p>
       <p class="copyright">© <span id="year">2026</span> <span lang="en">Yuval's Light Codes</span></p>
     </div>
   </footer>
 
-  <dialog class="lightbox" id="lightbox" aria-label="תצוגת ציור">
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-caption">
     <figure class="lb-figure">
-      <img id="lightbox-img" src="" alt="">
+      <img id="lightbox-img" alt="">
       <figcaption class="lb-caption">
         <p class="sr-only" id="lb-live" aria-live="polite" aria-atomic="true"></p>
         <p class="lb-count" dir="ltr"><span id="lb-now">01</span> / <span id="lb-total">05</span></p>
@@ -401,6 +409,6 @@
     <button class="lightbox-close" type="button" aria-label="סגירה">×</button>
   </dialog>
 
-  <script src="main.js?v=1792342868" defer></script>
+  <script src="main.js?v=1792343789" defer></script>
 </body>
 </html>
