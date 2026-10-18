@@ -31,8 +31,16 @@ function onScroll() {
     contactVisible = r.top < innerHeight && r.bottom > 0;
   }
   header.classList.toggle("scrolled", y > 20);
-  floatCta.classList.toggle("show", y > hero.offsetHeight * 0.8 && !contactVisible);
+  // Hidden once the contact form is on screen or already passed (footer)
+  const nearEnd = contactSection.getBoundingClientRect().top < innerHeight;
+  floatCta.classList.toggle("show", y > hero.offsetHeight * 0.8 && !contactVisible && !nearEnd);
+  // On phones the pill steps aside while reading down and returns on scroll up
+  if (Math.abs(y - lastY) > 8) {
+    floatCta.classList.toggle("away", y > lastY);
+    lastY = y;
+  }
 }
+let lastY = window.scrollY;
 window.addEventListener("scroll", onScroll, { passive: true });
 
 /* Mobile nav */
