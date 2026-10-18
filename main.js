@@ -17,38 +17,20 @@ const SERVICE_LABELS = {
 
 document.documentElement.classList.add("js");
 
-/* Header shadow + floating CTA */
+/* Header hairline once the page moves */
 const header = document.querySelector(".site-header");
-const floatCta = document.getElementById("float-cta");
-const hero = document.querySelector(".hero");
-const contactSection = document.getElementById("contact");
-let contactVisible = false;
-
-function onScroll() {
-  const y = window.scrollY;
-  if (!spy) {
-    const r = contactSection.getBoundingClientRect();
-    contactVisible = r.top < innerHeight && r.bottom > 0;
-  }
-  header.classList.toggle("scrolled", y > 20);
-  // Hidden once the contact form is on screen or already passed (footer)
-  const nearEnd = contactSection.getBoundingClientRect().top < innerHeight;
-  floatCta.classList.toggle("show", y > hero.offsetHeight * 0.8 && !contactVisible && !nearEnd);
-  // On phones the pill steps aside while reading down and returns on scroll up
-  if (Math.abs(y - lastY) > 8) {
-    floatCta.classList.toggle("away", y > lastY);
-    lastY = y;
-  }
-}
-let lastY = window.scrollY;
+const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 10);
 window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
 
 /* Mobile nav */
 const nav = document.getElementById("main-nav");
 const toggle = document.querySelector(".nav-toggle");
 
+const pageParts = [document.getElementById("main"), document.querySelector(".site-footer"), document.querySelector(".header-cta")];
 function setNav(open) {
   nav.classList.toggle("open", open);
+  pageParts.forEach((el) => { el.inert = open; });
   toggle.setAttribute("aria-expanded", String(open));
   toggle.setAttribute("aria-label", open ? "סגירת תפריט" : "פתיחת תפריט");
   document.body.classList.toggle("nav-open", open);
@@ -77,6 +59,7 @@ nav.addEventListener("click", (e) => {
   }
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && nav.classList.contains("open")) { setNav(false); toggle.focus(); } });
+document.querySelector(".site-header .brand").addEventListener("click", () => { if (nav.classList.contains("open")) setNav(false); });
 const desktopMq = window.matchMedia("(min-width: 961px)");
 const onDesktop = (e) => { if (e.matches) setNav(false); };
 if (desktopMq.addEventListener) desktopMq.addEventListener("change", onDesktop);
@@ -104,12 +87,51 @@ const spy = staticMode ? null : new IntersectionObserver((entries) => {
     navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${id}`));
   }
 }, { rootMargin: "-45% 0px -50% 0px" });
-if (spy) {
-  document.querySelectorAll("main section[id]").forEach((s) => spy.observe(s));
-  // Hide the floating CTA whenever any part of the contact section is on screen
-  new IntersectionObserver(([entry]) => { contactVisible = entry.isIntersecting; onScroll(); }).observe(contactSection);
+if (spy) document.querySelectorAll("main section[id]").forEach((s) => spy.observe(s));
+
+/* Artwork rail: prev/next buttons + "01 / 05" counter */
+const rail = document.getElementById("rail");
+const works = [...rail.querySelectorAll(".work")];
+const railNow = document.getElementById("rail-now");
+const [prevBtn, nextBtn] = ["prev", "next"].map((d) => document.querySelector(`.rail-btn[data-dir="${d}"]`));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let current = -1;
+
+function setCurrent(i) {
+  if (i === current) return;
+  current = i;
+  railNow.textContent = String(i + 1).padStart(2, "0");
+  prevBtn.disabled = i === 0;
+  nextBtn.disabled = i === works.length - 1;
 }
-onScroll();
+// RTL: align the artwork's right (start) edge with the rail's, scrolling only the rail
+function goTo(i) {
+  i = Math.max(0, Math.min(works.length - 1, i));
+  const delta = works[i].getBoundingClientRect().right - rail.getBoundingClientRect().right;
+  rail.scrollBy({ left: delta, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  setCurrent(i);
+}
+prevBtn.addEventListener("click", () => goTo(current - 1));
+nextBtn.addEventListener("click", () => goTo(current + 1));
+rail.addEventListener("keydown", (e) => {
+  const moves = { ArrowLeft: current + 1, ArrowRight: current - 1, Home: 0, End: works.length - 1 };
+  if (e.key in moves) { e.preventDefault(); goTo(moves[e.key]); }
+});
+// Follow manual swiping: the first artwork that is (almost) fully in view is "current"
+function trackRail() {
+  const box = rail.getBoundingClientRect();
+  const seen = works.map((w) => {
+    const r = w.getBoundingClientRect();
+    return Math.max(0, Math.min(r.right, box.right) - Math.max(r.left, box.left)) / r.width;
+  });
+  let best = seen.findIndex((f) => f > 0.95);
+  if (best === -1) best = seen.indexOf(Math.max(...seen));
+  if (Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 4) best = works.length - 1;
+  setCurrent(best);
+}
+let railTick = 0;
+rail.addEventListener("scroll", () => { cancelAnimationFrame(railTick); railTick = requestAnimationFrame(trackRail); }, { passive: true });
+setCurrent(0);
 
 /* CTA buttons preselect the service in the form */
 document.querySelectorAll("[data-service]").forEach((el) => {
@@ -145,7 +167,6 @@ const form = document.getElementById("contact-form");
 const statusEl = document.getElementById("form-status");
 const nameInput = document.getElementById("f-name");
 const nameError = document.getElementById("err-name");
-const directLinks = document.getElementById("direct-links");
 const copyBox = document.getElementById("copy-box");
 const copyText = document.getElementById("copy-text");
 const copyBtn = document.getElementById("copy-btn");
@@ -169,7 +190,7 @@ function contactUrl(text) {
 }
 
 nameInput.addEventListener("input", () => {
-  if (nameInput.value.trim()) { nameInput.removeAttribute("aria-invalid"); nameError.textContent = ""; }
+  if (nameInput.value.trim()) { nameInput.removeAttribute("aria-invalid"); nameInput.removeAttribute("aria-describedby"); nameError.textContent = ""; }
 });
 
 form.addEventListener("submit", (e) => {
@@ -244,7 +265,18 @@ for (const s of socials) {
   if (s.href.startsWith("http")) { a.target = "_blank"; a.rel = "noopener"; }
   li.append(a);
   socialList.append(li);
-  directLinks.append(a.cloneNode(true));
+}
+
+// "Or straight on WhatsApp: 050-582-2182" next to the form
+if (CONTACT.whatsapp) {
+  const local = "0" + CONTACT.whatsapp.replace(/^972/, "");
+  const pretty = local.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
+  const direct = document.getElementById("contact-direct");
+  const a = document.createElement("a");
+  a.href = `https://wa.me/${CONTACT.whatsapp}`;
+  a.dir = "ltr";
+  a.textContent = pretty;
+  direct.append("או ישירות ב־WhatsApp: ", a);
 }
 
 if (!CONTACT.whatsapp && !CONTACT.email) {
