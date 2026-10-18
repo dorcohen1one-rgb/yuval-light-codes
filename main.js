@@ -389,18 +389,6 @@ for (const s of socials) {
   socialList.append(li);
 }
 
-// "Or straight on WhatsApp: 050-582-2182" next to the form
-if (CONTACT.whatsapp) {
-  const local = "0" + CONTACT.whatsapp.replace(/^972/, "");
-  const pretty = local.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
-  const direct = document.getElementById("contact-direct");
-  const a = document.createElement("a");
-  a.href = `https://wa.me/${CONTACT.whatsapp}`;
-  a.dir = "ltr";
-  a.textContent = pretty;
-  direct.append("או ישירות ב־WhatsApp: ", a);
-}
-
 if (!CONTACT.whatsapp && !CONTACT.email) {
   document.getElementById("form-intro").textContent = "משאירים כמה פרטים, ומקבלים הודעה מוכנה לשליחה אליי.";
 }
