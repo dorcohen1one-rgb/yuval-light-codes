@@ -71,7 +71,14 @@ function splitWords(el) {
   const nodes = [];
   while (walker.nextNode()) if (walker.currentNode.textContent.trim()) nodes.push(walker.currentNode);
   let i = 0;
+  // Accent phrases (<em>, the hero's second line) move as one piece so their gradient stays continuous
+  const accents = new Set();
   for (const node of nodes) {
+    const accent = node.parentElement.closest("em, .accent");
+    if (accent && el.contains(accent)) {
+      if (!accents.has(accent)) { accents.add(accent); accent.classList.add("w"); accent.style.setProperty("--i", i++); }
+      continue;
+    }
     const frag = document.createDocumentFragment();
     for (const part of node.textContent.split(/(\s+)/)) {
       if (!part) continue;
